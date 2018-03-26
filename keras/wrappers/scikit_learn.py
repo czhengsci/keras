@@ -55,11 +55,11 @@ class BaseWrapper(object):
     `batch_size` or `epochs` as well as the model parameters.
     """
 
-    def __init__(self, build_fn=None,callbacks=[],**sk_params):
+    def __init__(self, build_fn=None, callbacks=[], **sk_params):
         self.build_fn = build_fn
-	self.callbacks = callbacks
+        self.callbacks = callbacks
         self.sk_params = sk_params
-	self.sk_params['callbacks']=callbacks
+        self.sk_params['callbacks'] = callbacks
         self.check_params(sk_params)
 
     def check_params(self, params):
@@ -76,7 +76,7 @@ class BaseWrapper(object):
         if self.build_fn is None:
             legal_params_fns.append(self.__call__)
         elif (not isinstance(self.build_fn, types.FunctionType) and
-              not isinstance(self.build_fn, types.MethodType)):
+                  not isinstance(self.build_fn, types.MethodType)):
             legal_params_fns.append(self.build_fn.__call__)
         else:
             legal_params_fns.append(self.build_fn)
@@ -100,7 +100,7 @@ class BaseWrapper(object):
             Dictionary of parameter names mapped to their values.
         """
         res = copy.deepcopy(self.sk_params)
-        res.update({'build_fn': self.build_fn, 'callbacks':self.callbacks})
+        res.update({'build_fn': self.build_fn, 'callbacks': self.callbacks})
         return res
 
     def set_params(self, **params):
@@ -135,7 +135,7 @@ class BaseWrapper(object):
         if self.build_fn is None:
             self.model = self.__call__(**self.filter_sk_params(self.__call__))
         elif (not isinstance(self.build_fn, types.FunctionType) and
-              not isinstance(self.build_fn, types.MethodType)):
+                  not isinstance(self.build_fn, types.MethodType)):
             self.model = self.build_fn(
                 **self.filter_sk_params(self.build_fn.__call__))
         else:
